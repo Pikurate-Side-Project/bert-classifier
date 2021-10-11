@@ -124,7 +124,7 @@ class BertTrainer(Trainer):
 
         train_engine.run(
             train_loader,
-            max_epochs=self.config._epochs
+            max_epochs=self.config.n_epochs
         )
 
         model.load_state_dict(validation_engine.best_model)

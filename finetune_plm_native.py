@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from transformers import BertTokenizerFast
 from transformers import BertForSequenceClassification, AlbertForSequenceClassification
 from transformers import AdamW
-from transformers import get_linear_schedule_with_warup
+from transformers import get_linear_schedule_with_warmup
 
 import torch_optimizer as custom_optim
 
@@ -95,7 +95,7 @@ def get_optimizer(model, config):
                 'weight_decay': 0.01
             },
             {
-                'params': [p for n, p in model.named_parametres() if any(nd in n for nd in no_decay)],
+                'params': [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
                 'weight_decay': 0.0
             }
         ]
@@ -129,7 +129,7 @@ def main(config):
         '#warmup_iters =', n_warmup_steps
     )
 
-    model_loader = AlbertForSequenceClassification if config.use_alber else BertForSequenceClassification
+    model_loader = AlbertForSequenceClassification if config.use_albert else BertForSequenceClassification
     model = model_loader.from_pretrained(
         config.pretrained_model_name,
         num_labels=len(index_to_label)
@@ -137,7 +137,7 @@ def main(config):
     optimizer = get_optimizer(model, config)
 
     crit = nn.CrossEntropyLoss()
-    scheduler = get_linear_schedule_with_warup(
+    scheduler = get_linear_schedule_with_warmup(
         optimizer,
         n_warmup_steps,
         n_total_iterations

@@ -10,7 +10,7 @@ from ignite.engine import Events
 from ignite.metrics import RunningAverage, metric
 from ignite.contrib.handlers.tqdm_logger import ProgressBar
 
-from simple_ntc.utils import get_grad_norm, get_paramter_norm
+from simple_ntc.utils import get_grad_norm, get_parameter_norm
 
 VERBOSE_SILENT = 0
 VERBOSE_EPOCH_WISE = 1
@@ -55,7 +55,7 @@ class MyEngine(Engine):
         else:
             accuracy = 0
         
-        p_norm = float(get_paramter_norm(engine.model.parameters()))
+        p_norm = float(get_parameter_norm(engine.model.parameters()))
         g_norm = float(get_grad_norm(engine.model.parameters()))
 
         # step3: Gradient descent

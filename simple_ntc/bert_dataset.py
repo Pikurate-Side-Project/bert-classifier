@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 
 class TextClassificationCollator():
 
-    def __init__(self, tokenizer: Any, max_length: int, with_text: str) -> None:
+    def __init__(self, tokenizer: Any, max_length: int, with_text=True) -> None:
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.with_text = with_text
